@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
             <div className="glass-panel w-full max-w-md p-8 sm:p-10 fade-in animate-slide-up relative overflow-hidden">
-                {/* Decorative background glow */}
+              
                 <div className="absolute -top-20 -right-20 w-60 h-60 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
 

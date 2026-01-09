@@ -6,11 +6,11 @@ interface JwtPayload {
     userId: string;
 }
 
-// Extend Request interface to include user
+
 declare global {
     namespace Express {
         interface Request {
-            user?: any; // Replace 'any' with your User type
+            user?: any; 
         }
     }
 }

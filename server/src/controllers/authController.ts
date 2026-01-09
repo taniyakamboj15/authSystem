@@ -4,9 +4,7 @@ import generateToken from '../utils/generateToken';
 import sendEmail from '../utils/email';
 import crypto from 'crypto';
 
-// @desc    Register a new user
-// @route   POST /api/auth/signup
-// @access  Public
+
 const signup = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
@@ -35,9 +33,6 @@ const signup = async (req: Request, res: Response) => {
     }
 };
 
-// @desc    Auth user & get token
-// @route   POST /api/auth/login
-// @access  Public
 const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -155,9 +150,7 @@ const forgotPassword = async (req: Request, res: Response) => {
     }
 };
 
-// @desc    Verify OTP
-// @route   POST /api/auth/verify-otp
-// @access  Public
+
 const verifyOtp = async (req: Request, res: Response) => {
     const { email, otp } = req.body;
 
@@ -175,9 +168,7 @@ const verifyOtp = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'OTP Verified' });
 };
 
-// @desc    Reset Password
-// @route   POST /api/auth/reset-password
-// @access  Public
+
 const resetPassword = async (req: Request, res: Response) => {
     const { email, otp, password } = req.body;
 

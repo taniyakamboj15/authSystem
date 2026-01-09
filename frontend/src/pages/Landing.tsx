@@ -10,15 +10,12 @@ const Landing: React.FC = () => {
 
     useEffect(() => {
         if (userInfo) {
-            // User is logged in, maybe redirect to profile or show logged in view
-            // Requirement: "when user not logged in then dont show user profile tab... and when login then show some interactive ui"
-            // So I will just conditionally render content here.
         }
     }, [userInfo, navigate]);
 
     return (
         <div className="container min-h-[90vh] flex flex-col justify-center items-center text-center fade-in">
-            {/* Decorative background glow */}
+          
             <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
             <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 

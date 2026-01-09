@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
             <div className="glass-panel w-full max-w-2xl p-8 sm:p-10 fade-in animate-slide-up relative overflow-hidden">
-                {/* Decorative background glow */}
+          
                 <div className="absolute -top-32 -right-32 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
