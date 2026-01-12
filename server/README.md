@@ -12,9 +12,11 @@ This is the backend server for **DevDrop**, a secure, real-time file-sharing app
     -   **Chunked Uploads**: Supports large file uploads via chunking for reliability.
 -   **Local Storage**: Files are stored locally in the `uploads/` directory with sanitized names.
 -   **Security**:
-    -   Rate Limiting (10 uploads/min per user).
-    -   Input Validation (Email, Password complexity).
-    -   Sanitized Filenames to prevent path traversal.
+    -   **Authentication**: JWT (JSON Web Tokens) with HTTP-Only cookies to prevent XSS.
+    -   **Middleware**: Protected routes verify tokens via `authMiddleware.ts`.
+    -   **Rate Limiting**: 10 uploads/min per user via `RateLimiter` class.
+    -   **Input Validation**: Strict Regex for emails and passwords.
+    -   **Sanitization**: Filenames are sanitized (removing special chars) to prevent path traversal attacks.
 -   **Scheduled Tasks**: Cron jobs to clean up old files or inactive sessions (configurable).
 -   **Global Error Handling**: Centralized error middleware for consistent API responses.
 
@@ -93,3 +95,25 @@ The server listens for and emits the following socket events for real-time funct
 -   `upload-end`: Finalize upload and notify recipients.
 -   `file-shared`: Emit to recipients when a file is ready for download.
 -   `online-users`: Broadcast the list of currently active users.
+
+## Security & Implementation Details
+
+### Protection Flow
+1.  **Request Entry**: Client sends a request to a protected route (e.g., `/api/auth/profile`).
+2.  **Cookie Check**: `authMiddleware.ts` extracts the `jwt` cookie.
+3.  **Token Verification**:
+    -   Verifies signature using `JWT_SECRET`.
+    -   Decodes `userId`.
+4.  **User Verification**: Fetches user from DB (excluding password).
+5.  **Grant Access**: If valid, attaches `req.user` and calls `next()`. If invalid, returns `401 Unauthorized`.
+
+### Edge Cases Handling
+
+**Scenario: Recipient goes offline during Private File Transfer**
+1.  **Upload Start**: Sender initiates upload. Server checks if Recipient is online.
+2.  **Mid-Transfer Disconnect**: Recipient closes browser while file is chunking.
+3.  **Completion**:
+    -   Server finishes saving the file to `uploads/`.
+    -   **Check**: Server attempts to find Recipient's socket ID in `onlineUsers`.
+    -   **Result**: Recipient is not found. The `file-shared` event is **NOT** emitted to the offline user to prevent socket errors. The Sender still gets a success ack, but the recipient won't see it until re-login (implementation dependent) or it's simply a missed transfer in this real-time implementation.
+

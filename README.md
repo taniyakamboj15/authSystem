@@ -1,91 +1,107 @@
-# Authentication System Project
+# DevDrop - Real-Time File Sharing System
 
-## About the Project
-This is a full-stack **Authentication System** that I built using the **MERN Stack** (MongoDB, Express, React, Node.js) and **TypeScript**. 
-
-I created this project to understand how secure login and signup systems work in real web applications. It’s a complete system where users can register, log in, and manage their profiles safely.
-
-It handles **Multi-User** functionality, which means different users can create their own accounts and log in to the system separately. Everyone has their own private data and profile page that others can't see.
+**DevDrop** is a secure, real-time file-sharing platform designed for developers to share code snippets, binaries, and assets instantly. Built on the **MERN Stack** (MongoDB, Express, React, Node.js) and **TypeScript**, it leverages **WebSocket** technology for peer-to-peer-like transfer speeds and immediate updates.
 
 ---
 
-## Features I Implemented
+## 🚀 Project Overview
 
-### 1. User Authentication
-- **Signup & Login**: Users can create an account and log in easily.
-- **Secure Sessions**: I used **HTTP-Only Cookies** to store tokens (JWT). This makes the app more secure than just storing tokens in the browser.
-- **Logout**: Safely logs the user out and clears the session.
+The goal of this project was to build a robust system that handles both **User Authentication** and **Real-Time Data Transfer**. It solves the problem of slow, clunky file sharing by providing a drag-and-drop interface where files are broadcasted or privately sent instantly to online users.
 
-### 2. Password Security (Forgot Password)
-- **Password Hashing**: I used **Bcrypt** to encrypt passwords before saving them in the database.
-- **Forgot Password Flow**: If a user forgets their password, they can reset it.
-- **Email OTP**: The system generates a 6-digit One-Time Password (OTP) and sends it to the user's email ID using **Nodemailer**.
-
-### 3. Profile Management
-- **Dashboard**: Once logged in, users can see their profile details.
-- **Update Profile**: Users can change their name, email, or update their password.
+### Key Capabilities
+-   **Real-Time Communication**: Uses `Socket.io` to create a live connection between all active users.
+-   **Secure Authentication**: Full signup/login flow with HTTP-Only cookies and JWT.
+-   **Hybrid Sharing Modes**:
+    1.  **Public Broadcast**: Share a file with *everyone* currently online.
+    2.  **Private Direct Message**: Select a specific user from the online list to send a file privately.
+-   **Visual Feedback**: Real-time upload progress bars and success notifications.
 
 ---
 
-## Tech Stack Used
+## 🏗️ Architecture & Logic
 
-*   **Frontend**: React (with Vite), Redux Toolkit (for state management), Tailwind CSS (for styling).
-*   **Backend**: Node.js, Express.js.
-*   **Database**: MongoDB (Mongoose).
-*   **Language**: TypeScript (for better code quality).
-*   **Tools**: Postman (for API testing), Nodemailer (for sending emails).
+### 1. The Real-Time Engine (Socket.io)
+At the heart of DevDrop is a WebSocket server (`src/socket/socketHandler.ts`) that manages active connections.
+-   **Connection**: When a user logs in, they establish a socket connection and are added to an `onlineUsers` list.
+-   **Events**:
+    -   `upload-start`: Signals the server to prepare for an incoming file stream.
+    -   `upload-chunk`: Files are split into binary chunks on the client and streamed to the server to handle large files efficiently without blocking the main thread.
+    -   `file-shared`: Once the upload completes, the server emits this event.
+        -   **If Public**: Emitted to `io.emit()` (all users).
+        -   **If Private**: Emitted to `io.to(recipientSocketId)` (only the target user).
+
+### 2. File Storage Strategy
+-   Files are stored locally on the server in an `uploads/` directory.
+-   **Sanitization**: Filenames are sanitized and prefixed with a unique UUID to prevent collisions and security risks (e.g., path traversal attacks).
+-   **Cleanup**: A Cron job (`src/services/cronJob.ts`) automatically cleans up old files to manage server storage.
+
+### 3. Frontend Experience (React + Redux)
+-   **State Management**: `Redux Toolkit` manages the authenticated user state.
+-   **Context API**: `SocketContext` maintains the active WebSocket connection and exposes it to components.
+-   **Drag & Drop**: The `UploadPanel` component uses HTML5 Drag and Drop API to accept files, which are then read and chunked for upload.
 
 ---
 
-## How to Run This Project
+## 🔄 Feature Flow
 
-If you want to run this project on your local machine, follow these steps:
+### Scenario A: Public Sharing
+1.  **User A** drags a file into the "Share File" zone.
+2.  Selects **"Everyone (Public)"** from the dropdown.
+3.  Clicks **"Send File"**.
+4.  **Backend** receives the file chunks, saves them to disk.
+5.  **Backend** broadcasts a "New File Available" event to **ALL** connected sockets.
+6.  **Users B, C, and D** see the file appear instantly in their "Live Feed" and can download it.
 
-### 1. Setup Backend
-Go to the `server` folder and install dependencies:
+### Scenario B: Private Sharing
+1.  **User A** sees **User B** in the "Online Users" list.
+2.  Selects **User B** from the dropdown.
+3.  Uploads the file.
+4.  **Backend** verifies User B is still online.
+5.  **Backend** saves the file but sends the notification **ONLY** to User B's specific socket ID.
+6.  **User B** receives the file. **User C** sees nothing.
+
+---
+
+## ✅ Acceptance Criteria Status
+
+| Requirement | Status | Implementation Details |
+| :--- | :--- | :--- |
+| **WebSocket Connection** | 🟢 **Working** | Users auto-connect on login; status is tracked live. |
+| **Public Sharing** | 🟢 **Working** | Default mode; broadcasts to global room. |
+| **Private Sharing** | 🟢 **Working** | Targeted emission using `socket.to(id)`. |
+| **Progress Events** | 🟢 **Working** | Upload percentage calculated from chunk completion. |
+| **Multiple Users** | 🟢 **Working** | Tested with concurrent sessions; distinct user identities maintained. |
+| **Local Storage** | 🟢 **Working** | Files saved to `server/uploads` with reliable retrieval. |
+
+---
+
+## 🛠️ Tech Stack & Security
+
+*   **Frontend**: React, Vite, Tailwind CSS (Dark Mode enabled), Redux, Socket.io-client.
+*   **Backend**: Node.js, Express, Socket.io, Multer (custom chunk handler), Node-Cron.
+*   **Authentication**:
+    *   **JWT Implementation**: Tokens stored in secure, HTTP-only cookies to prevent XSS attacks.
+    *   **Password Security**: Bcrypt hashing for encryption.
+    *   **Input Validation**: Strict regex for emails and passwords.
+
+---
+
+## 🚀 How to Run
+
+### 1. Backend Setup
 ```bash
 cd server
 npm install
-```
-Create a `.env` file in the `server` folder with these details:
-```
-PORT=5000
-MONGO_URI=your_mongodb_url
-JWT_SECRET=some_secret_key
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_email_password
-```
-Run the server:
-```bash
 npm run dev
+# Server runs on port 5000 (Socket & API)
 ```
 
-### 2. Setup Frontend
-Go to the `frontend` folder and install dependencies:
+### 2. Frontend Setup
 ```bash
 cd frontend
 npm install
-```
-Run the frontend:
-```bash
 npm run dev
+# Client runs on port 5173
 ```
 
----
-
-## API Endpoints List
-
-Here are the API routes I created for the backend:
-
-- **POST** `/api/auth/signup` -> Register a new user
-- **POST** `/api/auth/login` -> Login user
-- **POST** `/api/auth/logout` -> Logout user
-- **GET**  `/api/auth/profile` -> Get user details (Requires Login)
-- **PUT**  `/api/auth/profile` -> Update profile details (Requires Login)
-- **POST** `/api/auth/forgot-password` -> Send OTP to email
-- **POST** `/api/auth/verify-otp` -> Verify the OTP
-- **POST** `/api/auth/reset-password` -> Set new password
-
----
-
-
+*For detailed setup instructions, please refer to the `README.md` files inside the `frontend` and `server` directories.*
