@@ -11,17 +11,18 @@ import {
 } from '../controllers/authController';
 import { protect } from '../middleware/authMiddleware';
 import { validateSignup, validateLogin } from '../middleware/validationMiddleware';
+import { authLimiter, apiLimiter } from '../middleware/rateLimitMiddleware';
 
 const router = express.Router();
 
-router.post('/signup', validateSignup, signup);
-router.post('/login', validateLogin, login);
+router.post('/signup', authLimiter, validateSignup, signup);
+router.post('/login', authLimiter, validateLogin, login);
 router.post('/logout', logout);
-router.post('/forgot-password', forgotPassword);
-router.post('/verify-otp', verifyOtp);
-router.post('/reset-password', resetPassword);
+router.post('/forgot-password', authLimiter, forgotPassword);
+router.post('/verify-otp', authLimiter, verifyOtp);
+router.post('/reset-password', authLimiter, resetPassword);
 router.route('/profile')
-    .get(protect, getUserProfile)
-    .put(protect, updateUserProfile);
+    .get(protect, apiLimiter, getUserProfile)
+    .put(protect, apiLimiter, updateUserProfile);
 
 export default router;

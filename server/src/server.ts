@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
+import helmet from 'helmet';
 import connectDB from './config/db';
 import authRoutes from './routes/authRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
@@ -13,7 +14,6 @@ import { initCronJobs } from './services/cronJob';
 
 dotenv.config();
 
-connectDB();
 
 // Initialize Cron Jobs
 initCronJobs();
@@ -26,6 +26,10 @@ app.use(cors({
     origin: 'http://localhost:5173', // Frontend URL
     credentials: true,
 }));
+
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" } 
+})); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -52,6 +56,13 @@ registerSocketHandlers(io);
 app.use(notFound);
 app.use(errorHandler);
 
-httpServer.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+
+
+connectDB().then(() => {
+    httpServer.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+}).catch((err: Error) => {
+    console.error('Failed to connect to DB', err);
+    process.exit(1);
 });
