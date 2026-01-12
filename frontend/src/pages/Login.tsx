@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -21,7 +21,7 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
             <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row fade-in animate-slide-up">
-                
+
                 {/* Visual Side (Left) */}
                 <div className="w-full md:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 p-12 text-white flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full">
@@ -29,7 +29,7 @@ const Login = () => {
                         <div className="absolute bottom-10 right-10 w-40 h-40 bg-pink-500/20 rounded-full blur-3xl"></div>
                         {/* Abstract wave pattern or shapes could go here */}
                     </div>
-                    
+
                     <div className="relative z-10">
                         <div className="text-3xl font-bold mb-2 tracking-tight">AuthSys</div>
                         <div className="h-1 w-12 bg-pink-500 rounded-full"></div>

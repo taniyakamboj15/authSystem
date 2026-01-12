@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -26,14 +26,14 @@ const Signup = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
             <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row-reverse fade-in animate-slide-up">
-                
+
                 {/* Visual Side (Right) */}
                 <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-600 to-pink-600 p-12 text-white flex flex-col justify-between relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full">
                         <div className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
                         <div className="absolute bottom-10 left-10 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl"></div>
                     </div>
-                    
+
                     <div className="relative z-10 flex justify-end">
                         <div className="text-3xl font-bold mb-2 tracking-tight">AuthSys</div>
                     </div>
