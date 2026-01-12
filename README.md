@@ -17,7 +17,7 @@ It handles **Multi-User** functionality, which means different users can create 
 - **Logout**: Safely logs the user out and clears the session.
 
 ### 2. Password Security (Forgot Password)
-- **Password Hashing**: I used **Bcrypt** to encrypt passwords before saving them in the database. I learned that we should never save plain passwords.
+- **Password Hashing**: I used **Bcrypt** to encrypt passwords before saving them in the database.
 - **Forgot Password Flow**: If a user forgets their password, they can reset it.
 - **Email OTP**: The system generates a 6-digit One-Time Password (OTP) and sends it to the user's email ID using **Nodemailer**.
 
@@ -88,9 +88,4 @@ Here are the API routes I created for the backend:
 
 ---
 
-## What I Learned
-Building this project helped me understand:
-- How to connect React with a Node.js backend.
-- How to handle errors properly (like "User already exists" or "Wrong password").
-- How to send real emails from a Node.js application.
-- The importance of type safety using TypeScript.
+
