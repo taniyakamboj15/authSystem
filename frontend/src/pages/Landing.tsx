@@ -10,20 +10,20 @@ const Landing: React.FC = () => {
 
     useEffect(() => {
         if (userInfo) {
-            
+
         }
     }, [userInfo, navigate]);
 
     return (
         <div className="container min-h-[90vh] flex flex-col justify-center items-center text-center">
             {/* Decorative background glow */}
-            <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none -z-10 animate-[float_8s_ease-in-out_infinite]"></div>
-            <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none -z-10 animate-[float_10s_ease-in-out_infinite_reverse]"></div>
+            <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none -z-10 animate-[float_8s_ease-in-out_infinite]"></div>
+            <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none -z-10 animate-[float_10s_ease-in-out_infinite_reverse]"></div>
 
             <div className="glass-panel w-full max-w-3xl p-12 relative overflow-hidden animate-slide-up">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-pulse-glow"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent animate-pulse-glow"></div>
 
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm pb-2">
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent drop-shadow-sm pb-2">
                     Welcome to AuthSys
                 </h1>
 

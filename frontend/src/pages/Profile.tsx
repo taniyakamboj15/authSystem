@@ -26,21 +26,21 @@ const Profile: React.FC = () => {
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
             <div className="glass-panel w-full max-w-2xl p-8 sm:p-10 fade-in animate-slide-up relative overflow-hidden">
-          
-                <div className="absolute -top-32 -right-32 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div className="absolute -top-32 -right-32 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div className="relative z-10">
-                    <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">User Profile settings</h2>
+                    <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-text to-text-muted bg-clip-text text-transparent">User Profile settings</h2>
 
                     {message && (
-                        <div className="bg-green-500/10 border border-green-500/20 text-green-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
+                        <div className="bg-success-bg border border-success/20 text-success px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
                             <CheckCircleIcon />
                             {message}
                         </div>
                     )}
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
+                        <div className="bg-danger-bg border border-danger/20 text-danger px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
                             <ExclamationCircleIcon />
                             {error}
                         </div>
@@ -73,7 +73,7 @@ const Profile: React.FC = () => {
                             </div>
                         </div>
 
-                        <h3 className="text-xl font-semibold text-slate-900 mb-4">Change Password</h3>
+                        <h3 className="text-xl font-semibold text-text mb-4">Change Password</h3>
 
                         <div className="space-y-4">
                             <Input

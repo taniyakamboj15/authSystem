@@ -21,25 +21,25 @@ const Input: React.FC<InputProps> = ({ label, error, startIcon, type, ...props }
 
     return (
         <div className="mb-6 w-full group">
-            <label className="block mb-2 text-sm font-medium text-slate-600 group-focus-within:text-indigo-600 transition-colors duration-300">
+            <label className="block mb-2 text-sm font-medium text-text-muted group-focus-within:text-primary transition-colors duration-300">
                 {label}
             </label>
             <div className="relative">
                 {startIcon && (
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors duration-300">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-primary transition-colors duration-300">
                         {startIcon}
                     </div>
                 )}
                 <input
                     type={inputType}
-                    className={`input-field ${startIcon ? '!pl-10' : ''} ${isPassword ? '!pr-10' : ''} ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
+                    className={`input-field ${startIcon ? '!pl-10' : ''} ${isPassword ? '!pr-10' : ''} ${error ? 'border-danger focus:border-danger focus:ring-danger/20' : ''}`}
                     {...props}
                 />
                 {isPassword && (
                     <button
                         type="button"
                         onClick={togglePasswordVisibility}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors focus:outline-none"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-primary transition-colors focus:outline-none"
                     >
                         {showPassword ? (
                             <EyeOffIcon className="w-5 h-5" />
@@ -50,7 +50,7 @@ const Input: React.FC<InputProps> = ({ label, error, startIcon, type, ...props }
                 )}
             </div>
             {error && (
-                <span className="text-red-500 text-xs mt-1.5 ml-1 animate-fade-in flex items-center gap-1">
+                <span className="text-danger text-xs mt-1.5 ml-1 animate-fade-in flex items-center gap-1">
                     <ExclamationCircleIcon className="w-3 h-3" />
                     {error}
                 </span>
