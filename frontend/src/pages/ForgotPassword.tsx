@@ -7,7 +7,7 @@ import { CheckCircleIcon } from '../components/icons/CheckCircleIcon';
 import { ExclamationCircleIcon } from '../components/icons/ExclamationCircleIcon';
 import { useForgotPassword } from '../hooks/useForgotPassword';
 
-const ForgotPassword: React.FC = () => {
+const ForgotPassword = () => {
     const {
         email,
         setEmail,

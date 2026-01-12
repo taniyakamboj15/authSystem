@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import Button from '../components/Button';
 
-const Landing: React.FC = () => {
+const Landing = () => {
     const { userInfo } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
 

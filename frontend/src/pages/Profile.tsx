@@ -5,7 +5,7 @@ import { CheckCircleIcon } from '../components/icons/CheckCircleIcon';
 import { ExclamationCircleIcon } from '../components/icons/ExclamationCircleIcon';
 import { useProfile } from '../hooks/useProfile';
 
-const Profile: React.FC = () => {
+const Profile = () => {
     const {
         name,
         setName,

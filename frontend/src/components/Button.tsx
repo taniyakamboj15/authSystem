@@ -12,7 +12,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     endIcon?: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
     children,
     variant = 'primary',
     size = 'md',
@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
     className = '',
     disabled,
     ...props
-}) => {
+}: ButtonProps) => {
     const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants = {

@@ -7,7 +7,7 @@ import api from '../api/axios';
 import Button from './Button';
 import { LogOutIcon } from './icons/LogOutIcon';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
     const { userInfo } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();

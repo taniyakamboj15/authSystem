@@ -9,7 +9,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     startIcon?: ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({ label, error, startIcon, type, ...props }) => {
+const Input = ({ label, error, startIcon, type, ...props }: InputProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const isPassword = type === 'password';
 

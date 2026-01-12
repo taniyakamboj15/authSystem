@@ -8,7 +8,7 @@ import { MailIcon } from '../components/icons/MailIcon';
 import { LockClosedIcon } from '../components/icons/LockClosedIcon';
 import { useSignup } from '../hooks/useSignup';
 
-const Signup: React.FC = () => {
+const Signup = () => {
     const {
         name,
         setName,

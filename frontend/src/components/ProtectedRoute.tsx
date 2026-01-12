@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 
-const ProtectedRoute: React.FC = () => {
+const ProtectedRoute = () => {
     const { userInfo } = useSelector((state: RootState) => state.auth);
 
     if (userInfo) {

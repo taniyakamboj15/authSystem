@@ -7,7 +7,7 @@ import { MailIcon } from '../components/icons/MailIcon';
 import { LockClosedIcon } from '../components/icons/LockClosedIcon';
 import { useLogin } from '../hooks/useLogin';
 
-const Login: React.FC = () => {
+const Login = () => {
     const {
         email,
         setEmail,

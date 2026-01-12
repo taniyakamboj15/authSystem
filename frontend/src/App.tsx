@@ -17,7 +17,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <Navbar />
