@@ -1,5 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode, useState } from 'react';
 import { ExclamationCircleIcon } from './icons/ExclamationCircleIcon';
+import { EyeIcon } from './icons/EyeIcon';
+import { EyeOffIcon } from './icons/EyeOffIcon';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -7,7 +9,16 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     startIcon?: ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({ label, error, startIcon, ...props }) => {
+const Input: React.FC<InputProps> = ({ label, error, startIcon, type, ...props }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const isPassword = type === 'password';
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
     return (
         <div className="mb-6 w-full group">
             <label className="block mb-2 text-sm font-medium text-slate-600 group-focus-within:text-indigo-600 transition-colors duration-300">
@@ -20,9 +31,23 @@ const Input: React.FC<InputProps> = ({ label, error, startIcon, ...props }) => {
                     </div>
                 )}
                 <input
-                    className={`input-field ${startIcon ? '!pl-10' : ''} ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
+                    type={inputType}
+                    className={`input-field ${startIcon ? '!pl-10' : ''} ${isPassword ? '!pr-10' : ''} ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''}`}
                     {...props}
                 />
+                {isPassword && (
+                    <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors focus:outline-none"
+                    >
+                        {showPassword ? (
+                            <EyeOffIcon className="w-5 h-5" />
+                        ) : (
+                            <EyeIcon className="w-5 h-5" />
+                        )}
+                    </button>
+                )}
             </div>
             {error && (
                 <span className="text-red-500 text-xs mt-1.5 ml-1 animate-fade-in flex items-center gap-1">
