@@ -1,53 +1,66 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import User from '../models/userModel';
 import generateToken from '../utils/generateToken';
 import sendEmail from '../utils/email';
 import crypto from 'crypto';
 
 
-const signup = async (req: Request, res: Response) => {
-    const { name, email, password } = req.body;
+const signup = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { name, email, password } = req.body;
 
-    const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ email });
 
-    if (userExists) {
-        res.status(400).json({ message: 'User already exists' });
-        return;
-    }
+        if (userExists) {
+            res.status(400);
+            throw new Error('User already exists');
+        }
 
-    const user = await User.create({
-        name,
-        email,
-        password,
-    });
-
-    if (user) {
-        generateToken(res, user._id);
-        res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
+        const user = await User.create({
+            name,
+            email,
+            password,
         });
-    } else {
-        res.status(400).json({ message: 'Invalid user data' });
+
+        if (user) {
+            generateToken(res, user._id);
+            res.status(201).json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+            });
+        } else {
+            res.status(400);
+            throw new Error('Invalid user data');
+        }
+    } catch (error) {
+        next(error);
     }
 };
 
-const login = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+// @desc    Auth user & get token
+// @route   POST /api/auth/login
+// @access  Public
+const login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+        const user = await User.findOne({ email });
 
-    // @ts-ignore
-    if (user && (await user.matchPassword(password))) {
-        generateToken(res, user._id);
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-        });
-    } else {
-        res.status(401).json({ message: 'Invalid email or password' });
+        // @ts-ignore
+        if (user && (await user.matchPassword(password))) {
+            generateToken(res, user._id);
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+            });
+        } else {
+            res.status(401);
+            throw new Error('Invalid email or password');
+        }
+    } catch (error) {
+        next(error);
     }
 };
 
@@ -61,52 +74,61 @@ const logout = (req: Request, res: Response) => {
 };
 
 
-const getUserProfile = async (req: Request, res: Response) => {
-    const user = await User.findById(req.user._id);
+const getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await User.findById(req.user!._id);
 
-    if (user) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-        });
-    } else {
-        res.status(404).json({ message: 'User not found' });
+        if (user) {
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+            });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        next(error);
     }
 };
 
 
-const updateUserProfile = async (req: Request, res: Response) => {
-    const user = await User.findById(req.user._id);
+const updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await User.findById(req.user!._id);
 
-    if (user) {
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
 
-        if (req.body.password) {
-            if (req.body.oldPassword) {
-                // @ts-ignore
-                if (await user.matchPassword(req.body.oldPassword)) {
-                    user.password = req.body.password;
+            if (req.body.password) {
+                if (req.body.oldPassword) {
+                    // @ts-ignore
+                    if (await user.matchPassword(req.body.oldPassword)) {
+                        user.password = req.body.password;
+                    } else {
+                        res.status(401);
+                        throw new Error('Invalid old password');
+                    }
                 } else {
-                    res.status(401).json({ message: 'Invalid old password' });
-                    return;
+                    res.status(400);
+                    throw new Error('Old password is required to set a new password');
                 }
-            } else {
-                res.status(400).json({ message: 'Old password is required to set a new password' });
-                return;
             }
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+            });
+        } else {
+            res.status(404);
+            throw new Error('User not found');
         }
-
-        const updatedUser = await user.save();
-
-        res.json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-        });
-    } else {
-        res.status(404).json({ message: 'User not found' });
+    } catch (error) {
+        next(error);
     }
 };
 
@@ -167,7 +189,6 @@ const verifyOtp = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'OTP Verified' });
 };
-
 
 const resetPassword = async (req: Request, res: Response) => {
     const { email, otp, password } = req.body;

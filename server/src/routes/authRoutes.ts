@@ -10,11 +10,12 @@ import {
     resetPassword,
 } from '../controllers/authController';
 import { protect } from '../middleware/authMiddleware';
+import { validateSignup, validateLogin } from '../middleware/validationMiddleware';
 
 const router = express.Router();
 
-router.post('/signup', signup);
-router.post('/login', login);
+router.post('/signup', validateSignup, signup);
+router.post('/login', validateLogin, login);
 router.post('/logout', logout);
 router.post('/forgot-password', forgotPassword);
 router.post('/verify-otp', verifyOtp);

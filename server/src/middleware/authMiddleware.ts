@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/userModel';
+import User, { IUser } from '../models/userModel';
 
 interface JwtPayload {
     userId: string;
@@ -10,7 +10,7 @@ interface JwtPayload {
 declare global {
     namespace Express {
         interface Request {
-            user?: any; 
+            user?: IUser;
         }
     }
 }
@@ -24,7 +24,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as JwtPayload;
 
-            req.user = await User.findById(decoded.userId).select('-password');
+            req.user = (await User.findById(decoded.userId).select('-password')) as IUser;
 
             next();
         } catch (error) {
