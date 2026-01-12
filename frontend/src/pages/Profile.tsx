@@ -1,72 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '../slices/authSlice';
-import type { RootState } from '../store';
-import api from '../api/axios';
+import React from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { CheckCircleIcon } from '../components/icons/CheckCircleIcon';
+import { ExclamationCircleIcon } from '../components/icons/ExclamationCircleIcon';
+import { useProfile } from '../hooks/useProfile';
 
 const Profile: React.FC = () => {
-    const { userInfo } = useSelector((state: RootState) => state.auth);
-
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [oldPassword, setOldPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (!userInfo) {
-            navigate('/login');
-        } else {
-            setName(userInfo.name);
-            setEmail(userInfo.email);
-        }
-    }, [navigate, userInfo]);
-
-    const submitHandler = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setMessage('');
-        setError('');
-
-        if (password && password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-
-        if (password && !oldPassword) {
-            setError('Please enter your old password to change it');
-            return;
-        }
-
-        setIsLoading(true);
-
-        try {
-            const res = await api.put('/auth/profile', {
-                name,
-                email,
-                password: password || undefined,
-                oldPassword: oldPassword || undefined
-            });
-            dispatch(setCredentials(res.data));
-            setMessage('Profile Updated Successfully');
-            // Clear password fields
-            setPassword('');
-            setOldPassword('');
-            setConfirmPassword('');
-        } catch (err: any) {
-            setError(err.response?.data?.message || err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    const {
+        name,
+        setName,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        oldPassword,
+        setOldPassword,
+        confirmPassword,
+        setConfirmPassword,
+        isLoading,
+        message,
+        error,
+        submitHandler
+    } = useProfile();
 
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
@@ -80,17 +35,13 @@ const Profile: React.FC = () => {
 
                     {message && (
                         <div className="bg-green-500/10 border border-green-500/20 text-green-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
+                            <CheckCircleIcon />
                             {message}
                         </div>
                     )}
                     {error && (
                         <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                            </svg>
+                            <ExclamationCircleIcon />
                             {error}
                         </div>
                     )}

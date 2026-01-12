@@ -1,34 +1,21 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { ArrowLeftIcon } from '../components/icons/ArrowLeftIcon';
+import { CheckCircleIcon } from '../components/icons/CheckCircleIcon';
+import { ExclamationCircleIcon } from '../components/icons/ExclamationCircleIcon';
+import { useForgotPassword } from '../hooks/useForgotPassword';
 
 const ForgotPassword: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-
-    const navigate = useNavigate();
-
-    const submitHandler = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setMessage('');
-        setError('');
-
-        try {
-            await api.post('/auth/forgot-password', { email });
-            setMessage('OTP sent to your email. Redirecting...');
-            setTimeout(() => {
-                navigate(`/reset-password?email=${encodeURIComponent(email)}`);
-            }, 2000);
-        } catch (err: any) {
-            setError(err.response?.data?.message || err.message);
-            setIsLoading(false);
-        }
-    };
+    const {
+        email,
+        setEmail,
+        isLoading,
+        message,
+        error,
+        submitHandler
+    } = useForgotPassword();
 
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
@@ -43,17 +30,13 @@ const ForgotPassword: React.FC = () => {
 
                     {message && (
                         <div className="bg-green-500/10 border border-green-500/20 text-green-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
+                            <CheckCircleIcon />
                             {message}
                         </div>
                     )}
                     {error && (
                         <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                            </svg>
+                            <ExclamationCircleIcon />
                             {error}
                         </div>
                     )}
@@ -77,9 +60,7 @@ const ForgotPassword: React.FC = () => {
 
                     <div className="text-center mt-8 pt-6 border-t border-slate-200">
                         <Link to="/login" className="text-indigo-600 hover:text-indigo-500 font-semibold text-sm transition-colors flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
-                            </svg>
+                            <ArrowLeftIcon />
                             Back to Login
                         </Link>
                     </div>
