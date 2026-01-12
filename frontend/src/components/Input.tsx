@@ -21,25 +21,25 @@ const Input = ({ label, error, startIcon, type, ...props }: InputProps) => {
 
     return (
         <div className="mb-6 w-full group">
-            <label className="block mb-2 text-sm font-medium text-text-muted group-focus-within:text-primary transition-colors duration-300">
+            <label className="block mb-2 text-sm font-medium text-text-muted dark:text-slate-400 group-focus-within:text-primary dark:group-focus-within:text-indigo-400 transition-colors duration-300">
                 {label}
             </label>
             <div className="relative">
                 {startIcon && (
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted group-focus-within:text-primary transition-colors duration-300">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted dark:text-slate-500 group-focus-within:text-primary dark:group-focus-within:text-indigo-400 transition-colors duration-300">
                         {startIcon}
                     </div>
                 )}
                 <input
                     type={inputType}
-                    className={`input-field ${startIcon ? '!pl-10' : ''} ${isPassword ? '!pr-10' : ''} ${error ? 'border-danger focus:border-danger focus:ring-danger/20' : ''}`}
+                    className={`input-field dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:focus:border-indigo-500 ${startIcon ? '!pl-10' : ''} ${isPassword ? '!pr-10' : ''} ${error ? 'border-danger focus:border-danger focus:ring-danger/20' : ''}`}
                     {...props}
                 />
                 {isPassword && (
                     <button
                         type="button"
                         onClick={togglePasswordVisibility}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-primary transition-colors focus:outline-none"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted dark:text-slate-500 hover:text-primary dark:hover:text-indigo-400 transition-colors focus:outline-none"
                     >
                         {showPassword ? (
                             <EyeOffIcon className="w-5 h-5" />

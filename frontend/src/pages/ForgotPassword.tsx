@@ -19,14 +19,14 @@ const ForgotPassword = () => {
 
     return (
         <div className="container min-h-[90vh] flex justify-center items-center py-12">
-            <div className="glass-panel w-full max-w-md p-8 sm:p-10 fade-in animate-slide-up relative overflow-hidden">
+            <div className="glass-panel w-full max-w-md p-8 sm:p-10 fade-in animate-slide-up relative overflow-hidden dark:bg-slate-800/80 dark:border-slate-700">
                 {/* Decorative background glow */}
                 <div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div className="relative z-10">
-                    <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-text to-text-muted bg-clip-text text-transparent">Forgot Password</h2>
-                    <p className="text-center text-slate-500 mb-8 text-sm">Enter your email to receive an OTP</p>
+                    <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-text to-text-muted dark:from-white dark:to-slate-400 bg-clip-text text-transparent">Forgot Password</h2>
+                    <p className="text-center text-slate-500 dark:text-slate-400 mb-8 text-sm">Enter your email to receive an OTP</p>
 
                     {message && (
                         <div className="bg-success-bg border border-success/20 text-success px-4 py-3 rounded-xl mb-6 text-sm text-center flex items-center justify-center gap-2 animate-fade-in">
@@ -58,8 +58,8 @@ const ForgotPassword = () => {
                         </div>
                     </form>
 
-                    <div className="text-center mt-8 pt-6 border-t border-slate-200">
-                        <Link to="/login" className="text-primary hover:text-primary-hover font-semibold text-sm transition-colors flex items-center justify-center gap-2">
+                    <div className="text-center mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                        <Link to="/login" className="text-primary dark:text-indigo-400 hover:text-primary-hover dark:hover:text-indigo-300 font-semibold text-sm transition-colors flex items-center justify-center gap-2">
                             <ArrowLeftIcon />
                             Back to Login
                         </Link>

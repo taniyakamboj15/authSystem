@@ -19,8 +19,8 @@ const Login = () => {
     } = useLogin();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-            <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row fade-in animate-slide-up">
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 p-4 transition-colors duration-300">
+            <div className="w-full max-w-5xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row fade-in animate-slide-up transition-colors duration-300">
 
                 {/* Visual Side (Left) */}
                 <div className="w-full md:w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 p-12 text-white flex flex-col justify-between relative overflow-hidden">
@@ -50,10 +50,10 @@ const Login = () => {
                 </div>
 
                 {/* Form Side (Right) */}
-                <div className="w-full md:w-1/2 p-8 sm:p-12 md:p-16 flex flex-col justify-center bg-white relative">
+                <div className="w-full md:w-1/2 p-8 sm:p-12 md:p-16 flex flex-col justify-center bg-white dark:bg-slate-800 relative transition-colors duration-300">
                     <div className="max-w-md mx-auto w-full">
-                        <h3 className="text-3xl font-bold text-slate-900 mb-2">Sign In</h3>
-                        <p className="text-slate-500 mb-8">Please enter your details to continue</p>
+                        <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Sign In</h3>
+                        <p className="text-slate-500 dark:text-slate-400 mb-8">Please enter your details to continue</p>
 
                         {error && (
                             <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm flex items-start gap-3 animate-fade-in break-words">
@@ -97,7 +97,7 @@ const Login = () => {
                         </form>
 
                         <div className="mt-8 text-center">
-                            <p className="text-slate-500 text-sm">
+                            <p className="text-slate-500 dark:text-slate-400 text-sm">
                                 Don't have an account?{' '}
                                 <Link to="/signup" className="text-indigo-600 hover:text-indigo-500 font-bold transition-colors">
                                     Create Account

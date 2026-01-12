@@ -28,10 +28,10 @@ const Button = ({
 
     const variants = {
         primary: 'bg-primary text-white hover:bg-primary-hover shadow-lg shadow-primary/25 hover:shadow-primary/40 focus:ring-primary',
-        secondary: 'bg-white text-text border border-surface-border hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200',
+        secondary: 'bg-white dark:bg-slate-800 text-text dark:text-white border border-surface-border dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:ring-slate-200 dark:focus:ring-slate-700',
         danger: 'bg-danger text-white hover:bg-danger-hover shadow-lg shadow-danger/25 focus:ring-danger',
-        outline: 'border-2 border-primary text-primary hover:bg-primary/5 focus:ring-primary',
-        ghost: 'text-text-muted hover:text-primary hover:bg-primary/5',
+        outline: 'border-2 border-primary dark:border-indigo-500 text-primary dark:text-indigo-400 hover:bg-primary/5 dark:hover:bg-indigo-500/10 focus:ring-primary',
+        ghost: 'text-text-muted dark:text-slate-400 hover:text-primary dark:hover:text-indigo-400 hover:bg-primary/5 dark:hover:bg-indigo-500/10',
     };
 
     const sizes = {
