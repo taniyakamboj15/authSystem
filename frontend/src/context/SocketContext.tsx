@@ -12,6 +12,7 @@ interface User {
     userId: string;
     socketId: string;
     username: string;
+    email: string;
 }
 
 const SocketContext = createContext<SocketContextData>({
@@ -41,6 +42,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
                 newSocket.emit('join', {
                     userId: userInfo._id, // Assuming _id is the unique ID
                     username: userInfo.name,
+                    email: userInfo.email
                 });
             });
 

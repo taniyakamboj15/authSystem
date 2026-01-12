@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import { SocketProvider } from './context/SocketContext';
+import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
+import ToastContainer from './components/ToastContainer';
 
 // Lazy load pages for Code Splitting
 const Landing = lazy(() => import('./pages/Landing'));
@@ -22,9 +25,12 @@ const LoadingFallback = () => (
 const App = () => {
   return (
     <Router>
-      <SocketProvider>
-        <Navbar />
-        <Suspense fallback={<LoadingFallback />}>
+      <ToastProvider>
+        <ThemeProvider>
+          <SocketProvider>
+            <Navbar />
+            <ToastContainer />
+            <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
@@ -38,8 +44,10 @@ const App = () => {
               <Route path="/fileshare" element={<FileShare />} />
             </Route>
           </Routes>
-        </Suspense>
-      </SocketProvider>
+          </Suspense>
+        </SocketProvider>
+        </ThemeProvider>
+      </ToastProvider>
     </Router>
   );
 };

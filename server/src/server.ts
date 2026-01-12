@@ -9,10 +9,14 @@ import connectDB from './config/db';
 import authRoutes from './routes/authRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { registerSocketHandlers } from './socket/socketHandler';
+import { initCronJobs } from './services/cronJob';
 
 dotenv.config();
 
 connectDB();
+
+// Initialize Cron Jobs
+initCronJobs();
 
 const app = express();
 const httpServer = createServer(app);

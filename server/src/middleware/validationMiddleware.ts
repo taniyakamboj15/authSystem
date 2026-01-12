@@ -35,7 +35,7 @@ const validateLogin = (req: Request, res: Response, next: NextFunction) => {
         throw new Error('Please include all fields: email and password');
     }
 
-    // We might not strictly enforce regex on login to avoid leaking info, but ensuring it's a valid email format is okay.
+
     if (!emailRegex.test(email)) {
         res.status(400);
         throw new Error('Please enter a valid email address');

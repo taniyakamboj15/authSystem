@@ -18,7 +18,7 @@ export const useLogin = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/profile');
+            navigate('/');
         }
     }, [navigate, userInfo]);
 
@@ -36,7 +36,7 @@ export const useLogin = () => {
         try {
             const res = await api.post('/auth/login', { email, password });
             dispatch(setCredentials(res.data));
-            navigate('/profile');
+            navigate('/');
         } catch (err: any) {
             setError(err.response?.data?.message || err.message);
         } finally {

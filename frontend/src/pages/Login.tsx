@@ -31,16 +31,16 @@ const Login = () => {
                     </div>
 
                     <div className="relative z-10">
-                        <div className="text-3xl font-bold mb-2 tracking-tight">AuthSys</div>
+                        <div className="text-3xl font-bold mb-2 tracking-tight">DevDrop</div>
                         <div className="h-1 w-12 bg-pink-500 rounded-full"></div>
                     </div>
 
                     <div className="relative z-10 my-10">
                         <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                            Welcome Back!
+                            Share with Confidence
                         </h2>
                         <p className="text-indigo-100 text-lg leading-relaxed">
-                            Sign in to access your personalized dashboard, manage your profile, and stay connected with the latest updates.
+                            Secure, encrypted file sharing for developers. Log in to access your personal dashboard.
                         </p>
                     </div>
 
@@ -56,9 +56,9 @@ const Login = () => {
                         <p className="text-slate-500 mb-8">Please enter your details to continue</p>
 
                         {error && (
-                            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm flex items-center gap-2 animate-fade-in">
-                                <ExclamationCircleIcon className="shrink-0" />
-                                {error}
+                            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm flex items-start gap-3 animate-fade-in break-words">
+                                <ExclamationCircleIcon className="w-5 h-5 shrink-0 mt-0.5" />
+                                <span className="flex-1">{error}</span>
                             </div>
                         )}
 

@@ -10,7 +10,7 @@ const errorHandler = (err: any, req: Request, res: Response, next: NextFunction)
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     let message = err.message;
 
-    // If Mongoose not found error, set to 404 and change message
+    // If Mongoose not found error
     if (err.name === 'CastError' && err.kind === 'ObjectId') {
         statusCode = 404;
         message = 'Resource not found';

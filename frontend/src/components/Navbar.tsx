@@ -5,6 +5,7 @@ import { logout } from '../slices/authSlice';
 import api from '../api/axios';
 import Button from './Button';
 import { LogOutIcon } from './icons/LogOutIcon';
+import { ThemeToggle } from './ThemeToggle';
 
 const Navbar = () => {
     const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -22,20 +23,21 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all duration-300">
+        <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 shadow-sm transition-all duration-300">
             <div className="container flex items-center justify-between h-16 px-4 mx-auto">
                 <Link to="/" className="flex items-center gap-2.5 group">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 group-hover:shadow-indigo-500/50 transition-all duration-300 group-hover:scale-105 group-hover:rotate-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                            <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
-                        </svg>
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 group-hover:shadow-indigo-500/50 transition-all duration-300 group-hover:scale-105 group-hover:rotate-3 font-bold text-lg">
+                        D
                     </div>
-                    <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:to-pink-600 transition-all duration-300">
-                        AuthSys
+                    <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-800 to-slate-600 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:to-pink-600 transition-all duration-300">
+                        DevDrop
                     </span>
                 </Link>
 
                 <div className="flex items-center gap-4">
+                    {/* Theme Toggle */}
+                    <ThemeToggle />
+
                     {userInfo ? (
                         <>
                             <Link

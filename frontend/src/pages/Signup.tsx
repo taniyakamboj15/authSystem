@@ -35,15 +35,15 @@ const Signup = () => {
                     </div>
 
                     <div className="relative z-10 flex justify-end">
-                        <div className="text-3xl font-bold mb-2 tracking-tight">AuthSys</div>
+                        <div className="text-3xl font-bold mb-2 tracking-tight">DevDrop</div>
                     </div>
 
                     <div className="relative z-10 my-10">
                         <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                            Join the Revolution
+                            Start Sharing Now
                         </h2>
                         <p className="text-pink-100 text-lg leading-relaxed">
-                            Create an account to unlock exclusive features, seamless collaboration, and a secure environment for all your needs.
+                            Join DevDrop to share code, binaries, and assets securely with your team.
                         </p>
                     </div>
 
@@ -59,9 +59,9 @@ const Signup = () => {
                         <p className="text-slate-500 mb-8">Start your journey with us</p>
 
                         {error && (
-                            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm flex items-center gap-2 animate-fade-in">
-                                <ExclamationCircleIcon className="shrink-0" />
-                                {error}
+                            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm flex items-start gap-3 animate-fade-in break-words">
+                                <ExclamationCircleIcon className="w-5 h-5 shrink-0 mt-0.5" />
+                                <span className="flex-1">{error}</span>
                             </div>
                         )}
 

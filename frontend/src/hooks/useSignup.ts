@@ -53,7 +53,7 @@ export const useSignup = () => {
         try {
             const res = await api.post('/auth/signup', { name, email, password });
             dispatch(setCredentials(res.data));
-            navigate('/profile');
+            navigate('/');
         } catch (err: any) {
             setError(err.response?.data?.message || err.message);
         } finally {
