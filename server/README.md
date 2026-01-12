@@ -14,7 +14,11 @@ This is the backend server for **DevDrop**, a secure, real-time file-sharing app
 -   **Security**:
     -   **Authentication**: JWT (JSON Web Tokens) with HTTP-Only cookies to prevent XSS.
     -   **Middleware**: Protected routes verify tokens via `authMiddleware.ts`.
-    -   **Rate Limiting**: 10 uploads/min per user via `RateLimiter` class.
+    -   **HTTP Headers**: `Helmet` middleware sets secure headers (protects against XSS, Clickjacking, Sniffing).
+    -   **Rate Limiting**: 
+        -   **Auth Routes**: Strict limit (20 req/15min) on Login/Signup.
+        -   **API Routes**: Relaxed limit (100 req/15min) on general endpoints.
+        -   **Uploads**: Custom limit (10 uploads/min) per user.
     -   **Input Validation**: Strict Regex for emails and passwords.
     -   **Sanitization**: Filenames are sanitized (removing special chars) to prevent path traversal attacks.
 -   **Scheduled Tasks**: Cron jobs to clean up old files or inactive sessions (configurable).
