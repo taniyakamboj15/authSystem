@@ -13,7 +13,9 @@ This is the frontend client for **DevDrop**, a modern, responsive, real-time fil
 -   **File Sharing Dashboard**:
     -   **Drag & Drop Upload**: Intuitive upload panel.
     -   **Real-time Progress**: Visual progress bar for active uploads.
-    -   **User Selection**: Dropdown to select specific online users for private sharing or broadcast to all.
+    -   **User Search**: Search users by name/email with status indicators (Online/Offline). Sending to offline users works seamlessly.
+    -   **Delivery Receipts**: Senders get "Delivered" notifications when offline recipients come online.
+    -   **Offline Notifications**:  Recipients get a specialized toast "Received while offline" upon logging in.
     -   **Live Feed**: Instant updates when new files are shared.
 -   **State Management**: Redux Toolkit for managing auth state and global app data.
 -   **Real-time Updates**: Socket.io client integration for live user status and file notifications.
@@ -34,7 +36,7 @@ This is the frontend client for **DevDrop**, a modern, responsive, real-time fil
 ```
 src/
 ├── components/      # Reusable UI components (Navbar, Button, etc.)
-│   ├── fileshare/   # Specific components for file sharing feature
+│   ├── fileshare/   # Specific components (UserSearch, UploadPanel, FileFeed)
 │   └── icons/       # SVG Icon components
 ├── context/         # React Contexts (Theme, Toast, Socket)
 ├── hooks/           # Custom hooks (useFileUpload, useAuth, etc.)
@@ -68,7 +70,3 @@ src/
     npm run build
     ```
     The output will be in the `dist` folder.
-
-## Configuration
-
-Make sure your backend server is running. The frontend is configured to connect to `http://localhost:5000` by default (check `vite.config.ts` or API configuration files if you need to change this).

@@ -1,7 +1,5 @@
+import UserSearch from './UserSearch';
 import { useFileUpload } from '../../hooks/useFileUpload';
-import { useSocket } from '../../context/SocketContext';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../store';
 
 const UploadPanel = () => {
     const { 
@@ -17,29 +15,16 @@ const UploadPanel = () => {
         uploadFile 
     } = useFileUpload();
 
-    const { onlineUsers } = useSocket();
-    const { userInfo } = useSelector((state: RootState) => state.auth);
-    const otherUsers = onlineUsers.filter(u => u.userId !== userInfo?._id);
-
     return (
         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 transition-colors duration-300">
             <h2 className="text-xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Share File</h2>
 
             {/* Recipient Selector */}
             <div className="mb-4">
-                <label className="block text-sm text-slate-500 dark:text-slate-400 mb-2">Send to:</label>
-                <select
-                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-600 rounded-xl p-2.5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 outline-none transition-colors"
-                    value={recipientId}
-                    onChange={(e) => setRecipientId(e.target.value)}
-                >
-                    <option value="">Everyone (Public)</option>
-                    {otherUsers.map(user => (
-                        <option key={user.userId} value={user.userId}>
-                            {user.username} {user.email ? `(${user.email})` : ''}
-                        </option>
-                    ))}
-                </select>
+                <UserSearch 
+                    selectedUserId={recipientId}
+                    onSelect={setRecipientId}
+                />
             </div>
 
             {/* Drop Zone */}
